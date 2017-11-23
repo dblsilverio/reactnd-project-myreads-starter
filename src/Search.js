@@ -13,7 +13,7 @@ export default class Search extends Component {
     }
 
     async updateQuery(query) {
-        this.setState({ query: query.trim() });
+        this.setState({ query: query });
         
         if(query.trim() && query.trim().length >=3){
             console.log(`Querying: ${query}`);
