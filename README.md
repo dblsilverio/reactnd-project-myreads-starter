@@ -27,7 +27,7 @@ Follow the steps below to a succeful buiding process:
 
 Test the build with `serve` package by installing it: `sudo npm install -g serve` and running `serve -s build` from the project's root path.
 
-You will be able to access the project through `http://localhost:5000` or yout local network ip followed by port 5000.
+You will be able to access the project through `http://localhost:5000` or your local network ip followed by port 5000.
 
 ## Sending to Production
 
