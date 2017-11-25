@@ -26,6 +26,23 @@ export default class MyShelves extends Component {
         })
     }
 
+    async move(book, fromShelf, toShelf) {
+
+        try {
+            await BooksAPI.update(book, toShelf);
+
+            this.setState((previous) => {
+                book.shelf = toShelf;
+                previous.shelves[`${fromShelf}`] = previous.shelves[`${fromShelf}`].filter(remove => book.id !== remove.id);
+                previous.shelves[`${toShelf}`] = previous.shelves[`${toShelf}`].concat(book);
+                return previous;
+            })
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     render() {
 
         return (
@@ -35,9 +52,9 @@ export default class MyShelves extends Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <Shelf name="Currently Reading" books={this.state.shelves.currentlyReading} />
-                        <Shelf name="Want to Read" books={this.state.shelves.wantToRead} />
-                        <Shelf name="Read" books={this.state.shelves.read} />
+                        <Shelf name="Currently Reading" books={this.state.shelves.currentlyReading} moveBook={this.move.bind(this)} />
+                        <Shelf name="Want to Read" books={this.state.shelves.wantToRead} moveBook={this.move.bind(this)} />
+                        <Shelf name="Read" books={this.state.shelves.read} moveBook={this.move.bind(this)} />
                     </div>
                 </div>
                 <div className="open-search">

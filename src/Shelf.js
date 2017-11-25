@@ -13,8 +13,8 @@ export default class Shelf extends Component {
                         {
                             this.props.books.map(book =>
                                 (
-                                    <li key={book.title}>
-                                        <Book info={book} />
+                                    <li key={book.id}>
+                                        <Book info={book} moveBook={this.props.moveBook} />
                                     </li>
                                 ))
                         }
