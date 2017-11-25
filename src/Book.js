@@ -35,7 +35,7 @@ export default class Book extends Component {
         }
 
         if (!actualShelf) {
-            actualShelf = "none";
+            actualShelf = 'none';
         }
 
         return (
