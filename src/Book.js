@@ -4,6 +4,12 @@ import * as BooksAPI from './BooksAPI'
 
 export default class Book extends Component {
 
+    /**
+     * Update the shelf of a book resource.
+     * 
+     * @param {Book} book 
+     * @param {string} to 
+     */
     async moveBook(book, to) {
         await BooksAPI.update(book, to);
 

@@ -12,6 +12,11 @@ export default class Search extends Component {
         searchBooks: []
     }
 
+    /**
+     * Update the query state and searches for books.
+     * 
+     * @param {string} query 
+     */
     async updateQuery(query) {
         this.setState({ query: query });
 
@@ -30,6 +35,11 @@ export default class Search extends Component {
         }
     }
 
+    /**
+     * Check which book belongs to each shelf available.
+     * 
+     * @param {array} books 
+     */
     checkShelves(books) {
         const booksInShelves = this.props.shelves.read.concat(this.props.shelves.wantToRead.concat(this.props.shelves.currentlyReading));
         books.forEach((book) => {

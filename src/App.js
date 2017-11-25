@@ -18,6 +18,9 @@ class BooksApp extends React.Component {
     }
   }
 
+  /**
+   * @description Refreshes shelves by requiring user books and filtering the response.
+   */
   async refreshShelves() {
     const booksInMyShelves = await BooksAPI.getAll();
 
@@ -34,6 +37,13 @@ class BooksApp extends React.Component {
     this.refreshShelves();
   }
 
+  /**
+   * Moves a book from his shelf to a destination shelf.
+   * 
+   * @param {Book} book - The book to be moved between shelves
+   * @param {string} fromShelf - The origin shelf
+   * @param {string} toShelf  - The destination shelf
+   */
   async move(book, fromShelf, toShelf) {
 
     try {
@@ -61,7 +71,7 @@ class BooksApp extends React.Component {
           <Shelves shelves={this.state.shelves} move={this.move.bind(this)} />
         )} />
         <Route path="/search" render={() => (
-          <Search shelves={this.state.shelves} refresh={this.refreshShelves.bind(this)}/>
+          <Search shelves={this.state.shelves} refresh={this.refreshShelves.bind(this)} />
         )} />
       </div>
     );
