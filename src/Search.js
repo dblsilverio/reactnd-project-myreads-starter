@@ -15,7 +15,7 @@ export default class Search extends Component {
     async updateQuery(query) {
         this.setState({ query: query });
         
-        if(query.trim() && query.trim().length >=3){
+        if(query.trim()){
             console.log(`Querying: ${query}`);
 
             try{
@@ -42,7 +42,7 @@ export default class Search extends Component {
                         {
                             this.state.books.map(book =>
                                 (
-                                    <li key={book.title}>
+                                    <li key={book.id}>
                                         <Book info={book} />
                                     </li>
                                 ))
