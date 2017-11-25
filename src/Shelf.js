@@ -14,7 +14,7 @@ export default class Shelf extends Component {
                             this.props.books.map(book =>
                                 (
                                     <li key={book.id}>
-                                        <Book info={book} moveBook={this.props.moveBook} />
+                                        <Book info={book} move={this.props.move} />
                                     </li>
                                 ))
                         }

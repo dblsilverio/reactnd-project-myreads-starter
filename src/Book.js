@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 
+import * as BooksAPI from './BooksAPI'
+
 export default class Book extends Component {
 
-    moveElsewhere(book, to){
-        this.props.moveBook(book, this.props.info.shelf, to);
+    async moveBook(book, to) {
+        await BooksAPI.update(book, to);
+
+        if (this.props.move) {
+            this.props.move(book, book.shelf, to);
+        } else if(this.props.refresh) {
+            this.props.refresh();
+        }
+
+        book.shelf = to;
+
     }
 
     render() {
@@ -11,13 +22,13 @@ export default class Book extends Component {
         let authors = this.props.info.authors;
         let actualShelf = this.props.info.shelf;
 
-        if(authors){
+        if (authors) {
             authors = authors.join(', ');
         } else {
             authors = this.props.info.publisher;
         }
 
-        if(!actualShelf){
+        if (!actualShelf) {
             actualShelf = "none";
         }
 
@@ -26,8 +37,8 @@ export default class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.info.imageLinks.smallThumbnail}")` }}></div>
                     <div className="book-shelf-changer">
-                        <select value={actualShelf} onChange={(e) => {this.moveElsewhere(this.props.info, e.target.value)}}>
-                            <option value="none" disabled>Move to...</option>
+                        <select value={actualShelf} onChange={(e) => { this.moveBook(this.props.info, e.target.value) }}>
+                            <option value="" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>

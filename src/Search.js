@@ -9,23 +9,36 @@ export default class Search extends Component {
 
     state = {
         query: '',
-        books: []
+        searchBooks: []
     }
 
     async updateQuery(query) {
         this.setState({ query: query });
-        
-        if(query.trim()){
+
+        if (query.trim()) {
             console.log(`Querying: ${query}`);
 
-            try{
-                this.setState({ books: await BooksAPI.search(query) });
-            } catch(e){
-                this.setState({ books: [] });
+            try {
+                const books = await BooksAPI.search(query);
+                this.checkShelves(books);
+                this.setState({ searchBooks: books });
+            } catch (e) {
+                this.setState({ searchBooks: [] });
             }
         } else {
-            this.setState({ books: [] });
+            this.setState({ searchBooks: [] });
         }
+    }
+
+    checkShelves(books) {
+        const booksInShelves = this.props.shelves.read.concat(this.props.shelves.wantToRead.concat(this.props.shelves.currentlyReading));
+        books.forEach((book) => {
+            const existent = booksInShelves.find((bs) => bs.id === book.id);
+
+            if (existent) {
+                book.shelf = existent.shelf;
+            }
+        });
     }
 
     render() {
@@ -40,10 +53,10 @@ export default class Search extends Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         {
-                            this.state.books.map(book =>
+                            this.state.searchBooks.map(book =>
                                 (
                                     <li key={book.id}>
-                                        <Book info={book} />
+                                        <Book info={book} refresh={this.props.refresh} />
                                     </li>
                                 ))
                         }
